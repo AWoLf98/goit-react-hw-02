@@ -1,21 +1,23 @@
 import css from './Options.module.css';
 
-export default function Options({value}) {
+export default function Options({ updateFeedback, resetFeedback, totalFeedback }) {
   return (
     <div className={css.options}>
-      <ul>
+      <ul className={css['options-list']}>
         <li>
-          <button>Good</button>
+          <button onClick={() => updateFeedback('good')}>Good</button>
         </li>
         <li>
-          <button>Neutral</button>
+          <button onClick={() => updateFeedback('neutral')}>Neutral</button>
         </li>
         <li>
-          <button>Bad</button>
+          <button onClick={() => updateFeedback('bad')}>Bad</button>
         </li>
-        <li>
-          <button>Reset</button>
-        </li>
+        {totalFeedback != 0 && (
+          <li>
+            <button onClick={resetFeedback}>Reset</button>
+          </li>
+        )}
       </ul>
     </div>
   );
