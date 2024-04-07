@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Description from './SipHappensCafe/Description/Description.jsx';
 import Options from './SipHappensCafe/Options/Options.jsx';
 import Feedback from './SipHappensCafe/Feedback/Feedback.jsx';
+import Notification from './SipHappensCafe/Notification/Notification';
 
 export default function App() {
   const [options, setOptions] = useState(() => {
@@ -12,6 +13,7 @@ export default function App() {
   });
 
   const totalFeedback = options.good + options.neutral + options.bad;
+  const positiveFeedback = Math.round((parseInt(options.good) / totalFeedback) * 100);
 
   useEffect(() => {
     localStorage.setItem('options', JSON.stringify(options));
@@ -40,7 +42,15 @@ export default function App() {
         resetFeedback={resetFeedback}
         totalFeedback={totalFeedback}
       />
-      <Feedback options={options} totalFeedback={totalFeedback} />
+      {!totalFeedback ? (
+        <Notification />
+      ) : (
+        <Feedback
+          options={options}
+          totalFeedback={totalFeedback}
+          positiveFeedback={positiveFeedback}
+        />
+      )}
     </>
   );
 }
